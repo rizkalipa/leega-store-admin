@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['type_product', 'sub_type_product'])->get();
+        $products = Product::with(['type_product', 'sub_type_product'])->orderBy('name')->get();
 
         return view('product.index', compact('products'));
     }
@@ -48,6 +48,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
             'type' => 'nullable',
             'sub_type' => 'nullable',
             'role' => 'nullable',
@@ -79,6 +80,7 @@ class ProductController extends Controller
             'type' => $data['type'],
             'sub_type' => $data['sub_type'],
             'stock' => $data['stock'],
+            'price' => $data['price'],
             'image' => $uploadedFileUrl
         ]);
 
@@ -111,6 +113,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
             'type' => 'nullable',
             'sub_type' => 'nullable',
             'role' => 'nullable',
@@ -143,6 +146,7 @@ class ProductController extends Controller
             'type' => $data['type'],
             'sub_type' => $data['sub_type'],
             'stock' => $data['stock'],
+            'price' => $data['price'],
             'image' => $uploadedFileUrl
         ]);
 

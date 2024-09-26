@@ -71,6 +71,16 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" class="form-control" autocomplete="off" id="price" name="price" value="{{ isset($product) ? $product->price : '' }}">
+                                    @error('price')
+                                    <small class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </small>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
                                     <label for="image" class="form-label">Product Image</label>
                                     <input type="file" class="form-control" autocomplete="off" id="image" name="image" data-max-size="2000000">
                                     @error('image')

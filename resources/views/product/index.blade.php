@@ -41,7 +41,9 @@
                                         <th>Name</th>
                                         <th>Type</th>
                                         <th>Sub Type</th>
+                                        <th>Image</th>
                                         <th>Stock</th>
+                                        <th>Price</th>
                                         <th style="width: 350px;"></th>
                                     </tr>
                                     </thead>
@@ -52,7 +54,13 @@
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->type_product ? $product->type_product->name : '-' }}</td>
                                             <td>{{ $product->sub_type_product ? $product->sub_type_product->name : '-' }}</td>
+                                            <td>
+                                                <a href="{{ $product->image }}" target="_blank">
+                                                    <span><i class="fas fa-eye"></i></span>
+                                                </a>
+                                            </td>
                                             <td>{{ $product->stock }}</td>
+                                            <td>Rp {{ number_format($product->price) }}</td>
                                             <td>
                                                 <a href="{{ route('product_edit', $product->id) }}" class="btn btn-primary px-3">
                                                     <span class=""><i class="fas fa-edit me-2 fs-6"></i></span>

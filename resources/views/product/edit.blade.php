@@ -71,6 +71,16 @@
                                     @enderror
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" class="form-control" autocomplete="off" id="price" name="price" value="{{ isset($product) ? $product->price : '' }}">
+                                    @error('price')
+                                    <small class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </small>
+                                    @enderror
+                                </div>
+
                                 @if(isset($product) && $product->image)
                                     <div class="mb-3 w-100">
                                         <img src="{{ url($product->image) }}" class="img-thumbnail">
