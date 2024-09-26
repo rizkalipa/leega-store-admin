@@ -6,6 +6,10 @@ use App\Models\Product;
 use App\Models\SubType;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -50,12 +54,24 @@ class ProductController extends Controller
             'image' => 'nullable|max:20000|mimes:jpg,jpeg,png'
         ]);
         $data = $request->except('_token');
-        $filename = '';
+        $uploadedFileUrl = '';
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = $file->getClientOriginalName();
-            $file->move('product_image', $filename);
+
+            try {
+                $filename = $file->getBasename('.' . $file->getExtension());
+                $publicId = date('Y-m-d_His') . '_' . $filename;
+                $uploadedFileUrl = cloudinary()->upload(
+                    $file->getRealPath(),
+                    [
+                        'public_id' => $publicId,
+                        'folder' => 'product_image'
+                    ]
+                )->getSecurePath();
+            } catch (\Exception $e) {
+                $uploadedFileUrl = '';
+            }
         }
 
         Product::create([
@@ -63,7 +79,7 @@ class ProductController extends Controller
             'type' => $data['type'],
             'sub_type' => $data['sub_type'],
             'stock' => $data['stock'],
-            'image' => $filename
+            'image' => $uploadedFileUrl
         ]);
 
         return response()->redirectToRoute('product_list');
@@ -102,12 +118,24 @@ class ProductController extends Controller
         ]);
         $data = $request->except('_token');
         $product = Product::where('id', $productId)->first();
-        $filename = $product->image;
+        $uploadedFileUrl = $product->image;
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = $file->getClientOriginalName();
-            $file->move('product_image', $filename);
+
+            try {
+                $filename = $file->getBasename('.' . $file->getExtension());
+                $publicId = date('Y-m-d_His') . '_' . $filename;
+                $uploadedFileUrl = cloudinary()->upload(
+                    $file->getRealPath(),
+                    [
+                        'public_id' => $publicId,
+                        'folder' => 'product_image'
+                    ]
+                )->getSecurePath();
+            } catch (\Exception $e) {
+                $uploadedFileUrl = '';
+            }
         }
 
         Product::where('id', $productId)->update([
@@ -115,7 +143,7 @@ class ProductController extends Controller
             'type' => $data['type'],
             'sub_type' => $data['sub_type'],
             'stock' => $data['stock'],
-            'image' => $filename
+            'image' => $uploadedFileUrl
         ]);
 
         return response()->redirectToRoute('product_list');

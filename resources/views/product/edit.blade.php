@@ -73,7 +73,7 @@
 
                                 @if(isset($product) && $product->image)
                                     <div class="mb-3 w-100">
-                                        <img src="{{ url('product_image/' . $product->image) }}" class="img-thumbnail">
+                                        <img src="{{ url($product->image) }}" class="img-thumbnail">
                                     </div>
                                 @endif
 
