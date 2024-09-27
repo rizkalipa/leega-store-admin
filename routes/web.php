@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\SubTypeController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,3 +63,8 @@ Route::group(['prefix' => 'sub-type-product', 'middleware' => 'auth'], function 
     Route::get('/delete/{subTypeId}', [SubTypeController::class, 'delete'])->name('sub_type_delete');
     Route::post('/update/{subTypeId}', [SubTypeController::class, 'update'])->name('sub_type_update');
 });
+
+    Route::group(['prefix' => 'order', 'middleware' => 'auth'], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('order_list');
+        Route::post('/update-status', [OrderController::class, 'update'])->name('order_update');
+    });

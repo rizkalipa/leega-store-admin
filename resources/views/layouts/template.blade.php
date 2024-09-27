@@ -71,6 +71,17 @@
                                 <p>Products</p>
                             </a>
                         </li>
+                        <li class="nav-header">MANAGE ORDER</li>
+                        <li class="nav-item">
+                            <a href="{{ route('order_list', ['status' => 'N']) }}" class="nav-link"> <i class="nav-icon fas fa-clipboard-list"></i>
+                                <p>Order Process</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('order_list', ['status' => 'C']) }}" class="nav-link"> <i class="nav-icon fas fa-clipboard-check"></i>
+                                <p>Order Finish</p>
+                            </a>
+                        </li>
                         <li class="nav-header">PRODUCT TYPE</li>
                         <li class="nav-item">
                             <a href="{{ route('type_list') }}" class="nav-link"> <i class="nav-icon fas fa-folder-open"></i>
